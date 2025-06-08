@@ -16,6 +16,7 @@ import { getVideoInfo } from "./utils/youtubeProcessor.js";
 import { htmlGenerator } from "./utils/htmlGenerator.js";
 import { config } from "./config.js";
 import logger from "./utils/logger.js";
+import path from "path";
 
 // Define the specific nodes for the Glim YouTube Content Processor
 
@@ -62,6 +63,7 @@ class ProcessYouTubeURL extends Node {
 
         if (videoInfo.error) {
             logger.error(`Error processing video: ${videoInfo.error}`);
+            process.exit(-1);
             throw new Error(`Error processing video: ${videoInfo.error}`);
         }
 
@@ -655,9 +657,28 @@ class GenerateHTML extends Node {
         shared.html_output = execRes;
 
         // Write HTML to file
-        fs.writeFileSync("output.html", execRes);
+        try {
+            // Ensure output directory exists
+            const dir = path.resolve(config.output?.dirname || ".");
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, { recursive: true });
+            }
 
-        logger.info("Generated HTML output and saved to output.html");
+            // Prepare safe filename
+            const rawTitle =
+                shared.video_info?.title || "YouTube Video Summary";
+            const safeTitle = rawTitle
+                .replace(/[<>:"/\\|?*\x00-\x1F]/g, "")
+                .trim(); // sanitize filename
+            const filename = path.join(dir, `${safeTitle}.html`);
+
+            // Write HTML output to file
+            fs.writeFileSync(filename, execRes);
+            logger.info(`Generated HTML output and saved to ${filename}`);
+        } catch (err) {
+            console.error(`Could not create output directory: ${err.message}`);
+        }
+
         return "default";
     }
 }

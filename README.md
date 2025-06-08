@@ -1,17 +1,16 @@
 # Glim - YouTube Video Summarizer
 
-
 <div align="center">
   <img src="assets/banner.jpeg" alt="Glim Banner" width="800"/>
   <br/>
   <img src="assets/demo.gif" alt="Glim Demo" width="800"/>
 </div>
 
-
 ![Glim](https://img.shields.io/badge/Glim-YouTube_Summarizer-red)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 A powerful Node.js application that transforms YouTube videos into well-organized, easy-to-understand summaries. Glim processes videos to extract main topics, generate thought-provoking questions, and provide simple ELI5 (Explain Like I'm 5) answers in a beautifully formatted HTML document.
+
 ## Features
 
 - Extract transcript from YouTube videos
@@ -100,7 +99,7 @@ content:
     maxQuestionsPerTopic: 3
     codeLang: en
 output:
-    filename: output.html
+    dirname: output
 ```
 
 ### Changing AI Provider
@@ -176,7 +175,7 @@ You can adjust the following parameters in your `config.yml`:
 
 ### Output Customization
 
-- `filename`: Name of the output HTML file (default: 'output.html')
+- `dirname`: Name of the output output directory (default: 'output')
 - Use the `--pdf` flag to also generate a PDF version
 
 ## Project Structure
@@ -436,7 +435,6 @@ To add support for a different AI model or provider:
 
 - **Error**: "Failed to write output file as pdf"
     - **Solution**: Ensure you have Puppeteer installed correctly and enough system resources.
-
 
 ## License
 

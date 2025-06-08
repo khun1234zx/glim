@@ -114,26 +114,10 @@ async function main() {
         // Report success and output file location
         const pdf = options.pdf;
         if (pdf) {
-            await createPDFfile();
+            await createPDFfile(shared.video_info?.title);
         }
         console.log("\n" + "=".repeat(50));
         logger.log("Processing completed successfully!");
-        logger.log(
-            `Output HTML file: ${path.resolve(path.join(process.cwd(), config.output?.filename))}`,
-        );
-        options.pdf
-            ? logger.log(
-                  `Output PDF file: ${path.resolve(
-                      path.join(
-                          process.cwd(),
-                          config.output?.filename
-                              ?.split(".")
-                              .slice(0, -1)
-                              .join(".") + ".pdf",
-                      ),
-                  )}`,
-              )
-            : null;
         console.log("=".repeat(50) + "\n");
 
         return 0;

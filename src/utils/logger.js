@@ -9,6 +9,7 @@
  */
 import fs from "fs";
 import path from "path";
+import util from "util";
 
 /**
  * ANSI escape color codes for terminal output
@@ -119,6 +120,9 @@ class Logger {
             return;
         }
         this.log(`${COLORS.DEBUG}DEBUG${COLORS.RESET}`, message);
+    }
+    inspect(obj) {
+        console.log(util.inspect(obj, { depth: null }));
     }
 }
 

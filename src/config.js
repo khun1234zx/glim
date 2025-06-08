@@ -1,15 +1,16 @@
 /**
  * Glim Configuration Module
- * 
+ *
  * This module handles loading and managing configuration settings for Glim.
  * It supports loading from YAML files and environment variables.
- * 
+ *
  * @module config
  * @author Bagi
  */
 import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
+
 
 /**
  * Create a default configuration file with examples
@@ -61,13 +62,17 @@ export async function createDefaultConfig() {
         yamlStr += "# =====================\n\n";
         yamlStr += "# API Provider Settings\n";
         yamlStr += "# Provider options: google, openai, anthropic, localai\n";
-        yamlStr += "# See README.md for details on setting up each provider\n\n";
+        yamlStr +=
+            "# See README.md for details on setting up each provider\n\n";
         yamlStr += yaml.dump(enhancedConfig);
 
         // Append extra comments with examples
-        yamlStr += "\n# Example configurations for different providers (remove _examples in production):\n";
-        yamlStr += "# -------------------------------------------------------------------\n";
-        yamlStr += "# For detailed instructions on each provider, see README.md\n";
+        yamlStr +=
+            "\n# Example configurations for different providers (remove _examples in production):\n";
+        yamlStr +=
+            "# -------------------------------------------------------------------\n";
+        yamlStr +=
+            "# For detailed instructions on each provider, see README.md\n";
 
         await fs.promises.writeFile(configPath, yamlStr, "utf-8");
         console.log(`✅ Default YAML config written to ${configPath}`);
@@ -99,7 +104,7 @@ const defaultConfig = {
     },
     // Output settings
     output: {
-        filename: "output.html",
+        dirname: "output",
     },
 };
 
@@ -158,6 +163,7 @@ function mergeConfigs(defaultObj, userObj) {
 
 // Load configuration
 const config = loadConfig();
+
 export { config };
 // Export default config for reference
 export const defaultConfiguration = defaultConfig;

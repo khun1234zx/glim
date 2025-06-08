@@ -54,7 +54,7 @@ export function htmlGenerator(title, imageUrl, sections, lang = "en") {
 <body class="min-h-screen flex items-center justify-center p-4">
   <div class="max-w-2xl w-full bg-white rounded-2xl shadow-lg p-6">
     <div class="mb-6 ${isRTL ? "text-left" : "text-right"} text-gray-500 text-sm">
-      ${generatedByText} <a href="https://github.com/Hassan-ach/vist" class="underline hover:text-gray-700">Bagi</a>
+      ${generatedByText} <a href="https://github.com/Hassan-ach" class="underline hover:text-gray-700">Bagi</a>
     </div>
     <h1 class="text-4xl text-gray-800 mb-4">${title}</h1>
     <img src="${imageUrl}" alt="Video thumbnail" class="rounded-xl mb-6" />`;
