@@ -13,7 +13,7 @@ import fs from "fs";
 import { Node, BatchNode } from "./pocketflow.js";
 import { callLLM } from "./utils/callLLM.js";
 import { getVideoInfo } from "./utils/youtubeProcessor.js";
-import { htmlGenerator } from "./utils/htmlGenerator.js";
+import { _generateHtmlForTheme } from "./utils/htmlGenerator.js";
 import { config } from "./config.js";
 import logger from "./utils/logger.js";
 import path from "path";
@@ -43,7 +43,9 @@ class ProcessYouTubeURL extends Node {
      */
     async prep(shared) {
         logger.debug("Preparing to process YouTube URL");
-        return shared.url || "";
+        const url = shared.url || "";
+        const lang = shared.lang || config.content?.codeLang || "";
+        return { url, lang };
     }
 
     /**
@@ -52,14 +54,15 @@ class ProcessYouTubeURL extends Node {
      * @returns {Object} Video information
      * @throws {Error} If URL is missing or processing fails
      */
-    async exec(url) {
+    async exec(data) {
+        const { url, lang } = data;
         if (!url) {
             logger.error("No YouTube URL provided");
             throw new Error("No YouTube URL provided");
         }
 
         logger.info(`Processing YouTube URL: ${url}`);
-        const videoInfo = await getVideoInfo(url);
+        const videoInfo = await getVideoInfo(url, lang);
 
         if (videoInfo.error) {
             logger.error(`Error processing video: ${videoInfo.error}`);
@@ -137,14 +140,16 @@ class ExtractTopicsAndQuestions extends Node {
         const videoInfo = shared.video_info || {};
         const transcript = videoInfo.transcript || "";
         const title = videoInfo.title || "";
-        return { transcript, title };
+        const lang = shared.lang || config.content?.codeLang || "en";
+        return { transcript, title, lang };
     }
 
     async exec(data) {
         /**
          * Extract topics and generate questions using LLM
          */
-        const { transcript, title, topicsNumber, maxQuestionsPerTopic } = data;
+        const { transcript, title, lang, topicsNumber, maxQuestionsPerTopic } =
+            data;
 
         // Single prompt to extract topics and questions together
         const prompt = `You are an expert content analyzer. Given a YouTube video transcript, identify at most ${config.content?.maxTopics || 5} most interesting topics discussed and generate at most ${config.content?.maxQuestionsPerTopic || 3} most thought-provoking questions for each topic.
@@ -156,7 +161,7 @@ TRANSCRIPT:
 ${transcript}
 
 For your answers:
-1. All The Answers should be in this LANGUAGE: ${config.content?.codeLang || "en"}
+1. All answers must be in The language that have this ISO code: ${lang} only. Do not respond in any other language, even if the question is asked in a different language. 
 
 Format your response in YAML:
 
@@ -242,6 +247,7 @@ class ProcessContent extends BatchNode {
         /**
          * Return list of topics for batch processing
          */
+        const lang = shared.lang || config.content?.codeLang || "en";
         const topics = shared.topics || [];
         const videoInfo = shared.video_info || {};
         const transcript = videoInfo.transcript || "";
@@ -273,8 +279,9 @@ class ProcessContent extends BatchNode {
             }
 
             batchItems.push({
-                topic: { ...topic }, // FIXED: Create copy to avoid mutation
+                topic: { ...topic },
                 transcript,
+                lang,
             });
         }
 
@@ -286,7 +293,7 @@ class ProcessContent extends BatchNode {
          * Process a topic using LLM
          */
         try {
-            const { topic, transcript } = item;
+            const { topic, transcript, lang } = item;
 
             // FIXED: Validate item structure
             if (!topic || !topic.title) {
@@ -351,7 +358,7 @@ For your answers:
 2. Prefer lists with <ol> and <li> tags. Ideally, <li> followed by <b> for the key points.
 3. Quote important keywords but explain them in easy-to-understand language (e.g., "<b>Quantum computing</b> is like having a super-fast magical calculator")
 4. Keep answers interesting but short
-5. All The Answers should be in this LANGUAGE: ${config.content?.codeLang || "en"}
+5. All answers must be in The language that have this ISO code: ${lang} only. Do not respond in any other language, even if the question is asked in a different language. 
 
 Format your response in YAML:
 
@@ -597,15 +604,17 @@ class GenerateHTML extends Node {
          */
         const videoInfo = shared.video_info || {};
         const topics = shared.topics || [];
+        const theme = shared.theme || config.content?.theme || "default";
+        const lang = shared.lang || config.content?.codeLang || "en";
 
-        return { video_info: videoInfo, topics };
+        return { video_info: videoInfo, topics, theme, lang };
     }
 
     async exec(data) {
         /**
          * Generate HTML using html_generator
          */
-        const { video_info: videoInfo, topics } = data;
+        const { video_info: videoInfo, topics, theme, lang } = data;
 
         const title = videoInfo.title || "YouTube Video Summary";
         const thumbnailUrl = videoInfo.thumbnail_url || "";
@@ -641,11 +650,12 @@ class GenerateHTML extends Node {
         }
 
         // Generate HTML
-        const htmlContent = htmlGenerator(
+        const htmlContent = _generateHtmlForTheme(
+            theme,
             title,
             thumbnailUrl,
             sections,
-            config.content?.codeLang || "en",
+            lang || config.content?.codeLang || "en",
         );
         return htmlContent;
     }

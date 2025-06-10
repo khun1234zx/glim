@@ -11,7 +11,6 @@ import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
 
-
 /**
  * Create a default configuration file with examples
  * @async
@@ -101,6 +100,7 @@ const defaultConfig = {
         maxTopics: 5,
         maxQuestionsPerTopic: 3,
         codeLang: "en",
+        theme: "default",
     },
     // Output settings
     output: {

@@ -3,7 +3,12 @@
 <div align="center">
   <img src="assets/banner.jpeg" alt="Glim Banner" width="800"/>
   <br/>
-  <img src="assets/demo.gif" alt="Glim Demo" width="800"/>
+  <img src="assets/demo.gif" alt="Glim Demo" wi### Output Customization
+
+- `dirname`: Name of the output directory (default: 'output')
+- Use the `--pdf` flag to also generate a PDF version
+- Use the `--theme <theme>` flag to select an output theme (default: 'default')
+- Use the `--lang <lang>` flag to specify the output language (default: 'en')"800"/>
 </div>
 
 ![Glim](https://img.shields.io/badge/Glim-YouTube_Summarizer-red)
@@ -66,6 +71,24 @@ Generate a PDF version of the output:
 node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --pdf
 ```
 
+Select a specific theme:
+
+```bash
+node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --theme material
+```
+
+Set the output language:
+
+```bash
+node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --lang fr
+```
+
+Specify an AI provider directly:
+
+```bash
+node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --provider openai --api-key "your-api-key"
+```
+
 ### Processing Steps
 
 When you run Glim, it will:
@@ -84,23 +107,52 @@ Glim can be configured via a YAML configuration file. Create a default config wi
 node src/index.js --config
 ```
 
-This will create a `config.yml` file with the following structure:
+This will create a `config.yml` file with detailed examples for all providers and the following structure:
 
 ```yaml
+# Glim Configuration File
+# =====================
+
+# API Provider Settings
+# Provider options: google, openai, anthropic, localai
+# See README.md for details on setting up each provider
+
 api:
-    provider: google # Options: google, openai, anthropic, localai
-    key: # Your API key for the chosen provider
-    model: gemini-2.0-flash
-    temperature: 0.7 # Controls randomness in responses (0.0-1.0)
-    max_tokens: 4000 # Maximum tokens in response
-    endpoint: http://localhost:11434/api/generate # For localai provider only
+  provider: google
+  key: ""
+  model: gemini-2.0-flash
+  temperature: 0.7
+  max_tokens: 4000
+  endpoint: http://localhost:11434/api/generate
+  _examples:
+    google:
+      provider: google
+      key: YOUR_GOOGLE_API_KEY
+      model: gemini-2.0-flash
+    openai:
+      provider: openai
+      key: YOUR_OPENAI_API_KEY
+      model: gpt-4o
+    anthropic:
+      provider: anthropic
+      key: YOUR_ANTHROPIC_API_KEY
+      model: claude-3-sonnet-20240229
+    localai:
+      provider: localai
+      endpoint: http://localhost:11434/api/generate
+      model: llama3
+
 content:
-    maxTopics: 5
-    maxQuestionsPerTopic: 3
-    codeLang: en
+  maxTopics: 5
+  maxQuestionsPerTopic: 3
+  codeLang: en
+  theme: default
+
 output:
-    dirname: output
+  dirname: output
 ```
+
+You can also set configuration via environment variables, which take precedence over the config file.
 
 ### Changing AI Provider
 
@@ -175,8 +227,34 @@ You can adjust the following parameters in your `config.yml`:
 
 ### Output Customization
 
-- `dirname`: Name of the output output directory (default: 'output')
+- `dirname`: Name of the output directory (default: 'output')
 - Use the `--pdf` flag to also generate a PDF version
+- Use the `--theme <theme>` flag to select an output theme (default: 'default')
+- Use the `--lang <lang>` flag to specify the output language (default: 'en')
+
+### HTML Themes
+
+Glim offers several beautifully crafted themes for your video summaries:
+
+1. **Default** - Clean, minimalist design with soft shadows and modern typography
+2. **Neomorphism** - Soft UI design with subtle shadows and clean interfaces
+3. **Glassmorphism** - Modern glass-like transparent UI elements
+4. **RetroY2K** - Nostalgic design inspired by early 2000s web aesthetics
+5. **Hacker** - Terminal-style dark theme with monospace fonts
+6. **Typography** - Focus on beautiful typography with perfect readability
+7. **Maximalist** - Bold, vibrant design with decorative elements
+8. **Brutalist** - Raw, bold design with high contrast and visible construction
+9. **Flat** - Clean, minimalist design without shadows or depth
+10. **Minimalist** - Ultra-simple design focused on content
+11. **Material** - Following Material Design principles with cards, elevation and color system
+
+Select a theme using the `--theme` flag:
+
+```bash
+node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --theme brutalist
+```
+
+Example outputs of different themes can be found in the `output` directory.
 
 ## Project Structure
 
@@ -435,6 +513,11 @@ To add support for a different AI model or provider:
 
 - **Error**: "Failed to write output file as pdf"
     - **Solution**: Ensure you have Puppeteer installed correctly and enough system resources.
+
+### Theme Issues
+
+- **Error**: "Theme not found" or "Rendering error"
+    - **Solution**: Verify the theme name is correct and matches one of the available options.
 
 ## License
 

@@ -10,7 +10,6 @@
  */
 
 import { program } from "commander";
-import path from "path";
 import readline from "readline";
 import { createYouTubeProcessorFlow } from "./flow.js";
 import { config, createDefaultConfig } from "./config.js";
@@ -47,6 +46,8 @@ async function main() {
             .option("--url <url>", "YouTube video URL to process")
             .option("--config", "Create default config file")
             .option("--pdf", "Create pdf format from the html")
+            .option("--theme <theme>, Output Theme")
+            .option("--lang <lang>, Output language")
             .option(
                 "--provider <name>",
                 "Specify AI provider (google, openai, anthropic, localai)",
@@ -106,7 +107,11 @@ async function main() {
         const flow = createYouTubeProcessorFlow();
 
         // Initialize shared memory
-        const shared = { url: inputURL };
+        const shared = {
+            url: inputURL,
+            theme: options.theme || "default",
+            lang: options.lang || "",
+        };
 
         // Run the flow
         await flow.run(shared);

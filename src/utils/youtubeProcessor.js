@@ -10,7 +10,7 @@
 import { JSDOM } from "jsdom";
 import TranscriptAPI from "youtube-transcript-api";
 import { config } from "../config.js";
-import logger  from "./logger.js";
+import logger from "./logger.js";
 
 /**
  * Extract YouTube video ID from URL
@@ -50,7 +50,7 @@ export function extractVideoId(url) {
  * @param {string} url - The YouTube video URL
  * @returns {Object} Object containing video info or error
  */
-export async function getVideoInfo(url) {
+export async function getVideoInfo(url, _lang) {
     const videoId = extractVideoId(url);
     if (!videoId) {
         logger.error(`Invalid YouTube URL: ${url}`);
@@ -78,10 +78,20 @@ export async function getVideoInfo(url) {
         const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
         // Extract transcript using specified language
-        const lang = config.content?.codeLang || "en";
+        const lang = _lang || config.content?.codeLang || "en";
         logger.info(`Fetching transcript in language: ${lang}`);
 
-        const transcriptData = await TranscriptAPI.getTranscript(videoId, lang);
+        let transcriptData;
+
+        try {
+            logger.info(`Attempting transcript fetch in language: ${lang}`);
+            transcriptData = await TranscriptAPI.getTranscript(videoId, lang);
+        } catch (err) {
+            logger.warn(
+                `Failed to fetch transcript in ${lang}, trying English fallback...`,
+            );
+            transcriptData = await TranscriptAPI.getTranscript(videoId);
+        }
         if (!transcriptData || transcriptData.length === 0) {
             throw new Error(
                 "Could not extract video transcript. Video might not have captions.",
